@@ -6,18 +6,21 @@ set_jdbc_url() {
 
   local db_protocol
   db_protocol=$(expr "$db_url" : "\(.\+\)://")
-
+  echo "$db_protocol"
   if [ "$db_protocol" = "postgres" ]; then
     local jdbc_protocol="jdbc:postgresql"
-
+    echo "${CI:-}"
     if [ "${CI:-}" != "true" ]; then
       local db_default_args="&sslmode=require"
     else
       local db_default_args=""
     fi
+    echo "$db_default_args"
   elif [ "$db_protocol" = "mysql" ]; then
     local jdbc_protocol="jdbc:mysql"
   fi
+  echo "$jdbc_protocol"
+
 
   if [ -n "$jdbc_protocol" ]; then
     local db_user
@@ -53,6 +56,7 @@ set_jdbc_url() {
   fi
 }
 
+echo "${DATABASE_URL}"
 if [ -n "${DATABASE_URL:-}" ]; then
   set_jdbc_url "$DATABASE_URL"
   if [ -n "${DATABASE_CONNECTION_POOL_URL:-}" ]; then
@@ -66,7 +70,7 @@ elif [ -n "${JAWSDB_MARIA_URL:-}" ]; then
 elif [ -n "${CLEARDB_DATABASE_URL:-}" ]; then
   set_jdbc_url "$CLEARDB_DATABASE_URL"
 fi
-
+echo "${JDBC_DATABASE_URL}"
 if [ "${DISABLE_SPRING_DATASOURCE_URL:-}" != "true" ] &&
   [ -n "${JDBC_DATABASE_URL:-}" ] &&
   [ -z "${SPRING_DATASOURCE_URL:-}" ] &&
