@@ -11,7 +11,7 @@ set_jdbc_url() {
   echo "$db_protocol"
   if [ "$db_protocol" = "postgres" ]; then
     local jdbc_protocol="jdbc:postgresql"
-    echo "${CI:-}"
+    echo "${CI}"
     if [ "${CI:-}" != "true" ]; then
       local db_default_args="&sslmode=require"
     else
