@@ -15,7 +15,7 @@ set_jdbc_url() {
     if [ "${CI:-}" != "true" ]; then
       local db_default_args="&sslmode=disable"
     else
-      local db_default_args=""
+      local db_default_args="&sslmode=disable"
     fi
     #echo "$db_default_args"
   elif [ "$db_protocol" = "mysql" ]; then
