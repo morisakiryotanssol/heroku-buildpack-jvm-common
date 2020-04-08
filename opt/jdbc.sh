@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+export
 #echo "start jdbc.sh"
 set_jdbc_url() {
 #  echo "start set_jdbc_url"
@@ -12,6 +12,7 @@ set_jdbc_url() {
   if [ "$db_protocol" = "postgres" ]; then
     local jdbc_protocol="jdbc:postgresql"
     #echo "${CI}"
+    export
     if [ "${CI:-}" != "true" ]; then
       local db_default_args="&sslmode=disable"
     else
@@ -88,3 +89,4 @@ fi
 for dbUrlVar in $(env | awk -F "=" '{print $1}' | grep "HEROKU_POSTGRESQL_.*_URL"); do
   set_jdbc_url "$(eval echo "\$${dbUrlVar}")" "${dbUrlVar//_URL/}_JDBC"
 done
+export
