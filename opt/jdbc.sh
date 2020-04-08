@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
+echo "start jdbc.sh"
 set_jdbc_url() {
+  echo "start set_jdbc_url"
   local db_url=${1}
   local env_prefix=${2:-"JDBC_DATABASE"}
 
@@ -54,6 +56,8 @@ set_jdbc_url() {
       eval "export ${env_prefix}_PASSWORD=\"${db_pass}\""
     fi
   fi
+  echo "end set_jdbc_url"
+  
 }
 
 echo "${DATABASE_URL}"
