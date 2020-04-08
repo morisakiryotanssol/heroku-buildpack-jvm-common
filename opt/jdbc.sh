@@ -56,7 +56,7 @@ set_jdbc_url() {
       eval "export ${env_prefix}_PASSWORD=\"${db_pass}\""
     fi
   fi
-  echo "end set_jdbc_url"
+  #echo "end set_jdbc_url"
   
 }
 
