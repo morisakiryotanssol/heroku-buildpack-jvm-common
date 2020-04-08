@@ -1,27 +1,27 @@
 #!/usr/bin/env bash
 
-echo "start jdbc.sh"
+#echo "start jdbc.sh"
 set_jdbc_url() {
-  echo "start set_jdbc_url"
+#  echo "start set_jdbc_url"
   local db_url=${1}
   local env_prefix=${2:-"JDBC_DATABASE"}
 
   local db_protocol
   db_protocol=$(expr "$db_url" : "\(.\+\)://")
-  echo "$db_protocol"
+#  echo "$db_protocol"
   if [ "$db_protocol" = "postgres" ]; then
     local jdbc_protocol="jdbc:postgresql"
-    echo "${CI}"
+    #echo "${CI}"
     if [ "${CI:-}" != "true" ]; then
-      local db_default_args="&sslmode=require"
+      local db_default_args="&sslmode=disable"
     else
       local db_default_args=""
     fi
-    echo "$db_default_args"
+    #echo "$db_default_args"
   elif [ "$db_protocol" = "mysql" ]; then
     local jdbc_protocol="jdbc:mysql"
   fi
-  echo "$jdbc_protocol"
+  #echo "$jdbc_protocol"
 
 
   if [ -n "$jdbc_protocol" ]; then
@@ -60,7 +60,7 @@ set_jdbc_url() {
   
 }
 
-echo "${DATABASE_URL}"
+#echo "${DATABASE_URL}"
 if [ -n "${DATABASE_URL:-}" ]; then
   set_jdbc_url "$DATABASE_URL"
   if [ -n "${DATABASE_CONNECTION_POOL_URL:-}" ]; then
@@ -74,7 +74,7 @@ elif [ -n "${JAWSDB_MARIA_URL:-}" ]; then
 elif [ -n "${CLEARDB_DATABASE_URL:-}" ]; then
   set_jdbc_url "$CLEARDB_DATABASE_URL"
 fi
-echo "${JDBC_DATABASE_URL}"
+#echo "${JDBC_DATABASE_URL}"
 if [ "${DISABLE_SPRING_DATASOURCE_URL:-}" != "true" ] &&
   [ -n "${JDBC_DATABASE_URL:-}" ] &&
   [ -z "${SPRING_DATASOURCE_URL:-}" ] &&
